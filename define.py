@@ -15,7 +15,7 @@ def fetch(keyword):
             else:
                 raise Exception("Request failed!")
         except:
-            return "Something wrong happened!!!"
+            return "Something went wrong, could not fetch meaning!!!"
     else:
         return "input must be a string."
 
