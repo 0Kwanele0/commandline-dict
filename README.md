@@ -26,6 +26,6 @@ Install the package:
 
 Usage :
 
-   shelldict any_english_word
+      shelldict any_english_word
 
 Enjoy!!!
