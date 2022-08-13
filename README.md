@@ -24,7 +24,8 @@ Install the package:
     python setup.py install    
 
 
-Usage :
+Usage
+------
 
       shelldict any_english_word
 
