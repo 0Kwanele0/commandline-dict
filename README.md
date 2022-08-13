@@ -11,22 +11,21 @@ Installation
 
 Fast install:
 
-::
 
     pip install shelldict
 
 For a manual install get this package:
-
-::
 
     git clone https://github.com/0Kwanele/shelldict.git
     cd shelldict
 
 Install the package:
 
-::
-
     python setup.py install    
 
+
+Usage :
+
+   shelldict any_english_word
 
 Enjoy!!!
