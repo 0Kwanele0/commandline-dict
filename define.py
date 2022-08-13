@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import requests, json, sys
 from termcolor import colored, cprint
@@ -29,7 +29,6 @@ def resPos(keyword, data):
             if (len(data[0]['meanings'][0]['definitions'])>2):
                 defination_two = data[0]['meanings'][0]['definitions'][1]['definition']
                 defination_three = data[0]['meanings'][0]['definitions'][2]['definition']
-                print("resPost return")
                 return (f"{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}\n[3]{defination_three}")
             else:
                 defination_two = data[0]['meanings'][0]['definitions'][1]['definition']
@@ -43,5 +42,5 @@ cmd_args = sys.argv
 if len(cmd_args) > 1:
     cprint(fetch(cmd_args[1]), 'yellow')
 else:
-    print("please provide a word!!")
+    cprint("please provide a word!!", 'red')
 
