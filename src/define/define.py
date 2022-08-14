@@ -1,23 +1,27 @@
 #!/usr/bin/env python3
 
-import requests, json, sys
-from termcolor import colored, cprint
+import requests,time, json, sys, threading, itertools
+from termcolor import cprint
 
+cmd_args = sys.argv
 
-def fetch(keyword):
-    if isinstance(keyword, str):
-        try:
-            url = "https://api.dictionaryapi.dev/api/v2/entries/en/"
-            response = requests.get(url+keyword)
-            if response.status_code == 200:
-                data = response.json()
-                return resPos(keyword, data)
-            else:
-                raise Exception("Request failed!")
-        except:
-            return "Something went wrong, could not fetch meaning!!!"
+def fetch():
+    if (len(sys.argv)> 1):
+        if isinstance(cmd_args[1], str):
+            try:
+                url = "https://api.dictionaryapi.dev/api/v2/entries/en/"
+                response = requests.get(url+cmd_args[1])
+                if response.status_code == 200:
+                    data = response.json()
+                    return resPos(cmd_args[1], data)
+                else:
+                    raise Exception("Request failed!")
+            except:
+                cprint("Something went wrong, could not fetch meaning!!!", 'red')
+        else:
+            cprint("input must be a string.", 'red')
     else:
-        return "input must be a string."
+        cprint("Please provide a word!!!", 'red')
 
 
 
@@ -29,18 +33,23 @@ def resPos(keyword, data):
             if (len(data[0]['meanings'][0]['definitions'])>2):
                 defination_two = data[0]['meanings'][0]['definitions'][1]['definition']
                 defination_three = data[0]['meanings'][0]['definitions'][2]['definition']
-                return (f"{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}\n[3]{defination_three}")
+                cprint((f"\n{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}\n[3]{defination_three}"),'yellow')
             else:
                 defination_two = data[0]['meanings'][0]['definitions'][1]['definition']
-                return (f"{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}")
+                cprint((f"\n{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}"), 'yellow')
         else:
-            return (f"{keyword}:({speech})\n[1]{defination_one}")
+            cprint((f"\n{keyword}:({speech})\n[1]{defination_one}"), 'yellow')
 
 
-cmd_args = sys.argv
 
-if len(cmd_args) > 1:
-    cprint(fetch(cmd_args[1]), 'yellow')
-else:
-    cprint("please provide a word!!", 'red')
+mainThread = threading.Thread(target=fetch)
+
+mainThread.start()
+
+spinner = itertools.cycle(['-', '/', '|', '\\'])
+
+while mainThread.is_alive():
+    sys.stdout.write(next(spinner))   # write the next character
+    sys.stdout.flush()                
+    sys.stdout.write('\b')            # erase the last written char
 
