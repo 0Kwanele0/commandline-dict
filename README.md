@@ -16,7 +16,7 @@ Fast install:
 
 For a manual install get this package:
 
-    git clone https://github.com/0Kwanele/shelldict.git
+    git clone https://github.com/coderkwan/shelldict.git
     cd shelldict
 
 Install the package:

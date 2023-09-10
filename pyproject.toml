@@ -19,5 +19,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/0Kwanele0/shelldict"
-"Bug Tracker" = "https://github.com/0Kwanele0/shelldict/issues"
+"Homepage" = "https://github.com/codekwan/shelldict"
+"Bug Tracker" = "https://github.com/codekwan/shelldict/issues"
