@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-import requests,time, json, sys, threading, itertools
-from termcolor import cprint
+import requests,time, json, sys, threading, itertools, os, curses
+from termcolor import cprint,colored
 
 cmd_args = sys.argv
 
@@ -17,29 +17,33 @@ def fetch():
                 else:
                     raise Exception("Request failed!")
             except:
-                cprint("Something went wrong, could not fetch meaning!!!", 'red')
+                cprint("\bSomething went wrong, could not fetch meaning!!!", 'red')
         else:
-            cprint("input must be a string.", 'red')
+            cprint("\bInput must be a string.", 'red')
     else:
-        cprint("Please provide a word!!!", 'red')
-
+        cprint("\bPlease provide a word", "red")
 
 
 def resPos(keyword, data):
+
+        sys.stdout.write("\033[A\b")                
+
+        my_keyw = colored(" "+keyword+ " ","black", "on_white", attrs=["bold"])
         speech = data[0]['meanings'][0]['partOfSpeech']
+
         defination_one = data[0]['meanings'][0]['definitions'][0]['definition']
 
         if (len(data[0]['meanings'][0]['definitions'])>1):
             if (len(data[0]['meanings'][0]['definitions'])>2):
                 defination_two = data[0]['meanings'][0]['definitions'][1]['definition']
                 defination_three = data[0]['meanings'][0]['definitions'][2]['definition']
-                cprint((f"\n{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}\n[3]{defination_three}"),'yellow')
+
+                cprint((f"\n{my_keyw} ({speech})\n[1] {defination_one}\n[2] {defination_two}\n[3] {defination_three}\n"),'yellow')
             else:
                 defination_two = data[0]['meanings'][0]['definitions'][1]['definition']
-                cprint((f"\n{keyword}:({speech})\n[1]{defination_one}\n[2]{defination_two}"), 'yellow')
+                cprint((f"\n{my_keyw} ({speech})\n[1] {defination_one}\n[2] {defination_two}\n"), 'yellow')
         else:
-            cprint((f"\n{keyword}:({speech})\n[1]{defination_one}"), 'yellow')
-
+            cprint((f"\n{my_keyw} ({speech})\n[1] {defination_one}\n"), 'yellow')
 
 
 mainThread = threading.Thread(target=fetch)
